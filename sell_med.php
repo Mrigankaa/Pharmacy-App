@@ -45,7 +45,7 @@
                 </label>
             </div>
             <div id="showExisting" class="col-md-2 mt-4">
-                <select class="form-control">
+                <select class="form-control" id="customer">
                     <option value="">Select Customer</option>
                     <?php 
                         $sql = "SELECT customer_name from customer";
@@ -54,6 +54,11 @@
                         <option value="<?php echo $row["customer_name"]; ?>"><?php echo $row["customer_name"]; ?></option>
                     <?php }?>
                 </select>
+            </div>
+            <div class="mt-2">
+                <table class="table table-bordered text-center">
+                    <tbody id="showCustomer"></tbody>
+                </table>
             </div>
             <div id="showForm" class="mt-4 m-2">
                 <div class="row">
@@ -68,8 +73,8 @@
                         <textarea name="c_address" class="form-control col-md-6" placeholder="Address"></textarea>
                         <label>Doctor's Name</label>
                         <input type="text" name="d_name" class="form-control col-md-6" placeholder="Doctor's Name">
-                        <label>Doctor's Address</label>
-                        <textarea name="d_address" class="form-control col-md-6" placeholder="Doctor's Address"></textarea>
+                        <label>Doctor's Contact Number</label>
+                        <input type="text" name="d_address" class="form-control col-md-6" placeholder="Doctor's Contact Information">
                         <input type="submit" class="btn btn-info my-2" value="Add">
                     </form>
                 </div>                
@@ -132,8 +137,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="js/jquery.js"></script>
-    <script src="js/html2pdf.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js"></script>
+    <script src="js/sweetAlert.js"></script>
     <script>
         $(document).ready(function(){
             $("#showForm").hide();
@@ -150,6 +154,18 @@
             $("#showExisting").hide();
         });
 
+        $("#customer").change(function(){
+            var customer = $(this).val();
+            
+            $.ajax({
+                url:"valid_sell_med.php",
+                type:"post",
+                data:{customer:customer},
+                success:function(data,status){
+                    $("#showCustomer").html(data);
+                }
+            })
+        })
         var arr = [];
 
         $("#name").change(function(){            
@@ -213,17 +229,13 @@
             $("#grand").val(grandTotal);
         });
 
-        // function deleteRecord(){
-        //     $("#myTable").on("click","tr",function(){
-        //         var item = $(this).find("#item").text();
-        //         var selectItem = arr.indexOf(item);
-        //         if(selectItem!==-1){
-        //             arr.splice(selectItem,1);
-        //         }
-        //         console.log(arr);
-        //         $(this).remove(); 
-        //     })
-        // }
+        function deleteRecord(med_name){
+            var selectItem = arr.indexOf(med_name);
+            if(selectItem!==-1){
+                arr.splice(selectItem,1);
+            }  
+            
+        }
 
 
         $("#save").click(function(){

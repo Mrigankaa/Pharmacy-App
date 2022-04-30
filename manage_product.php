@@ -72,7 +72,9 @@
                         <a href="product.php" class="text-success">+ Add New Medicine</a>
                     </div>
                     <hr class="p-0.5 text-danger mb-4">
-                    <div id="displayData"></div>
+                    <div id="displayData">
+                        
+                    </div>
                     </div>
                     </div>
                 </div>            

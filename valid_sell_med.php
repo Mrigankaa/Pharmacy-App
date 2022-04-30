@@ -1,11 +1,13 @@
 <?php 
     include("connect.php");
     extract(($_POST));
+
     if(isset($_POST['name']) && isset($_POST['batch'])){
         $sql = "SELECT * from medicine where med_name = '$name' AND batch_number = '$batch'";
         $r = mysqli_query($conn,$sql);
         $row = mysqli_fetch_array($r);
         $med_name = $row['med_name'];
+        $med_id = $row['med_id'];
         $aval = $row['quantity'];
         $batch = $row['batch_number'];
         $expairy = $row['expiry_date'];
@@ -31,8 +33,28 @@
                     <td>'.$rack_number.'</td>
                     <td id="total"></td>
                     <td >
-                        <i class="bi bi-trash h4" style="cursor:pointer;" onclick="deleteRecord()"></i>
+                        <i class="bi bi-trash h4" id="Delete" style="cursor:pointer;" onclick="deleteRecord(\''.$med_name.'\')"></i>
                     </td>  
+                </tr>';
+        echo $table;
+    }
+
+    if(isset($_POST['customer'])){
+        $sql = "SELECT * from customer where customer_name = '$customer'";
+        $r = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($r);
+        $name = $row['customer_name'];
+        $pay = $row['previous_pay'];
+        $number = $row['phone_number'];
+        $address = $row['address'];
+        $doctor = $row['doctor_name'];
+        $d_phone = $row['doctor_address'];
+
+        $table = '<tr>
+                    <td>'.$name.'</td>
+                    <td>'.$pay.'</td>  
+                    <td>'.$number.'</td> 
+                    <td>'.$address.'</td> 
                 </tr>';
         echo $table;
     }
