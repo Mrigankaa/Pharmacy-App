@@ -50,12 +50,33 @@
         $doctor = $row['doctor_name'];
         $d_phone = $row['doctor_address'];
 
-        $table = '<tr>
-                    <td>'.$name.'</td>
-                    <td>'.$pay.'</td>  
-                    <td>'.$number.'</td> 
-                    <td>'.$address.'</td> 
-                </tr>';
+        $table =   '<div class="d-inline-block">
+                        <label>Cusomer Name :</label>
+                        <input type="text" id="" value="'.$name.'" class="form-control" readonly>
+                    </div>
+                    <div class="d-inline-block">
+                        <label>Prevois Pay :</label>
+                        <input type="text" id="" value="'.$pay.'" class="form-control" readonly>
+                    </div>
+                    <div class="d-inline-block">
+                        <label>Phone Number :</label>
+                        <input type="text" id="" value="'.$number.'" class="form-control" readonly>
+                    </div>
+                    <div class="d-inline-block">
+                        <label>Address :</label>
+                        <input type="text" id="" value="'.$address.'" class="form-control" readonly>
+                    </div>
+                    <div class="d-inline-block">
+                        <label>Payment Type :</label>
+                        <select id="payment_type" class="form-control">
+                            <option value="1">Cash Payment</option>
+                            <option value="2">Card Payment</option>
+                        </select>
+                    </div>
+                    <div class="d-inline-block">
+                        <label>Date :</label>
+                        <input type="date" id="date" class="form-control" >
+                    </div>';
         echo $table;
     }
 

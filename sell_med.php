@@ -2,13 +2,14 @@
     include "connect.php";    
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         extract($_POST);
-        if(isset($_POST['med_name']) && isset($_POST['batch_number']) && isset($_POST['quantity'])){
+        if(isset($_POST['med_name']) && isset($_POST['batch_number']) && isset($_POST['quantity']) && isset($_POST['total'])){
             $med_name = $_POST['med_name'];
             $batch_number = $_POST['batch_number'];
             $quantity = $_POST['quantity'];
+            $total = $_POST['total'];
             $date = date('Y-m-d');
             for($count = 0; $count < count($med_name); $count++){
-                $q= "INSERT INTO sales(med_name,batch_number,quantity,date) values('$med_name[$count]','$batch_number[$count]','$quantity[$count]','$date')";
+                $q= "INSERT INTO sales(med_name,batch_number,quantity,total,date) values('$med_name[$count]','$batch_number[$count]','$quantity[$count]','$total[$count]','$date')";
                 $r = mysqli_query($conn,$q);
                 $s = "UPDATE medicine SET quantity = quantity-'$quantity[$count]' Where med_name = '$med_name[$count]' AND batch_number = '$batch_number[$count]'";
                 $r1 = mysqli_query($conn,$s);
@@ -31,22 +32,10 @@
         <div class="card my-2">
             <div class="card-body">
                 <h3><i class="bi bi-cart-plus-fill"></i> Manage Sell</h3>
-                <hr class="p-0.5 text-danger mb-4">
-            <div class="form-check d-inline ml-2 m-3">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Existing Customer
-                </label>
-            </div>                
-            <div class="form-check d-inline m-4">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    New Customer
-                </label>
-            </div>
-            <div id="showExisting" class="col-md-2 mt-4">
+                <hr class="p-0.5 text-danger mb-4">               
+            <div id="showExisting" class="mt-4 d-inline-block">
                 <select class="form-control" id="customer">
-                    <option value="">Select Customer</option>
+                    <option value="">Select Exising</option>
                     <?php 
                         $sql = "SELECT customer_name from customer";
                         $r = mysqli_query($conn,$sql);       
@@ -55,29 +44,46 @@
                     <?php }?>
                 </select>
             </div>
-            <div class="mt-2">
-                <table class="table table-bordered text-center">
-                    <tbody id="showCustomer"></tbody>
-                </table>
+            <div class="m-2 d-inline-block">
+                <button type="button" class="btn btn-sm btn-primary" style="height: 37px;" data-bs-toggle="modal" data-bs-target="#addCustomer">
+                    New Customer
+                </button>
             </div>
-            <div id="showForm" class="mt-4 m-2">
-                <div class="row">
-                    <form action="manage_customer.php" method="post">
-                        <label>Customer Name</label>
-                        <input type="text" name="c_name" class="form-control col-md-6" placeholder="Name" required>
-                        <label>Contact Number</label>
-                        <input type="text" name="c_phone" class="form-control col-md-6" placeholder="Contact Number">
-                        <label for="">Previous Pay</label>
-                        <input type="text" name="pre_pay" class="form-control col-md-6" placeholder="Previous Pay">
-                        <label>Customer Address</label>
-                        <textarea name="c_address" class="form-control col-md-6" placeholder="Address"></textarea>
-                        <label>Doctor's Name</label>
-                        <input type="text" name="d_name" class="form-control col-md-6" placeholder="Doctor's Name">
-                        <label>Doctor's Contact Number</label>
-                        <input type="text" name="d_address" class="form-control col-md-6" placeholder="Doctor's Contact Information">
-                        <input type="submit" class="btn btn-info my-2" value="Add">
-                    </form>
-                </div>                
+            <div class="mt-2" id="showCustomer">
+            </div>
+            <div class="col col-md-12 table-responsive">
+            <div id="print_content" class="table-responsive">
+            	<table class="table table-bordered table-striped table-hover" id="sales_report_div">
+                    
+            	</table>
+            </div>
+          </div>
+            <div class="modal fade" id="addCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4 m-2">
+                            <label>Customer Name</label>
+                            <input type="text" name="c_name" id="c_name" class="form-control" placeholder="Name" required>
+                            <label>Contact Number</label>
+                            <input type="text" name="c_phone" class="form-control" placeholder="Contact Number">
+                            <label for="">Previous Pay</label>
+                            <input type="text" name="pre_pay" class="form-control" placeholder="Previous Pay">
+                            <label>Customer Address</label>
+                            <textarea name="c_address" class="form-control" placeholder="Address"></textarea>
+                            <label>Doctor's Name</label>
+                            <input type="text" name="d_name" class="form-control" placeholder="Doctor's Name">
+                            <label>Doctor's Contact Number</label>
+                            <input type="text" name="d_address" class="form-control" placeholder="Doctor's Contact Information">
+                            <button class="btn btn-info mt-2" onclick="addCustomer()">Add</button>            
+                    </div>
+                </div>
+                </div>
+            </div>
             </div>
             <hr class="p-0.5 text-danger mb-4">
             <div class="d-inline-block mr-5">
@@ -113,7 +119,7 @@
                 </tbody>
                </table>
                </div>
-               <hr class="p-0.5 text-success mt-5"> 
+               <hr class="p-0.5 text-info mt-5"> 
                <div>
                     <div class="d-inline-block">
                         <h5>Grand Total</h5>
@@ -129,7 +135,7 @@
                     </div>   
                     
                 </div>
-                <button class="btn btn-success float-right" id="save" onclick="makeBill()">Make Bill</button>
+                <button class="btn btn-success float-right" id="save" onclick="makeBill('Bill')">Make Bill</button>
             </div>
         </div>
         </div>
@@ -138,21 +144,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="js/jquery.js"></script>
     <script src="js/sweetAlert.js"></script>
+    <!-- <script src="js/makePdf.js"></script> -->
     <script>
-        $(document).ready(function(){
-            $("#showForm").hide();
-            $("#showExisting").hide();
-        });
 
-        $("#flexRadioDefault1").on("click",function(){
-            $("#showExisting").show();
-            $("#showForm").hide();   
-        });
-                
-        $("#flexRadioDefault2").on("click",function(){
-            $("#showForm").show();
-            $("#showExisting").hide();
-        });
+        function getDate(){
+            var date = new Date();
+            $("#date").val(date);
+        }
 
         $("#customer").change(function(){
             var customer = $(this).val();
@@ -242,6 +240,7 @@
             med_name = [];
             batch_number = [];
             quantity = [];
+            total = [];
             $("#row #item").each(function(){
                 med_name.push($(this).text());
             });
@@ -251,8 +250,12 @@
             $("#row #qunatity").each(function(){
                 quantity.push($(this).val());
             });
+            $("#row #total").each(function(){
+                total.push($(this).text());
+            });
             
             console.log(med_name);
+            console.log(total);
             
             $.ajax({
                 url:"sell_med.php",
@@ -260,7 +263,8 @@
                 data:{
                     med_name:med_name,
                     batch_number:batch_number,
-                    quantity:quantity
+                    quantity:quantity,
+                    total:total
                 },
                 success:function(data,status){
                     alert("Data Saved Successfully");
@@ -274,14 +278,7 @@
             var change = grandTotal-paid;
             $("#change").val(change);
         });
-
-        function makeBill(){
-            const element = $("#myTable");
-
-            html2pdf()
-            .form(element)
-            .save();
-        }
     </script>
 </body>
 </html>
+

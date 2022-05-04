@@ -36,3 +36,13 @@ CREATE table supplier(
     s_phone varchar(10),
     s_address varchar(255)
 );
+
+
+create table invoices(
+    invoice_id int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    c_id int(11) NOT NULL,
+    invoice_date date,
+    total_amount decimal(10,2) NOT NULL,
+    discount int(3),
+    net_total decimal(10,2)
+);

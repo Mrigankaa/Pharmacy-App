@@ -19,12 +19,7 @@
     <div class="container">
       <div class="card my-2">
           <div class="card-body">
-            <div class="d-inline-block">
             <h3><i class="bi bi-speedometer2"></i> DASHBOARD</h3>
-            </div>
-            <!-- <div class="d-inline-block float-right" style="cursor:pointer;">
-            <a href="profile.php"><i class="bi bi-gear h3  mb-5"></i></a>
-            </div> -->
             <hr class="p-0.5 text-danger mb-4">
             <div class="row">
             <div class="col-lg-3 col-6">
