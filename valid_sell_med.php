@@ -52,7 +52,7 @@
 
         $table =   '<div class="d-inline-block">
                         <label>Cusomer Name :</label>
-                        <input type="text" id="" value="'.$name.'" class="form-control" readonly>
+                        <input type="text" id="customer_name" value="'.$name.'" class="form-control" readonly>
                     </div>
                     <div class="d-inline-block">
                         <label>Prevois Pay :</label>

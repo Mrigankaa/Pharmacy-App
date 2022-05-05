@@ -47,8 +47,9 @@
         echo $table; 
     }
 
+
     if(isset($_POST['display'])){
-    $table = '
+        $table = '
         <table class="table table-bordered">
         <thead>
             <tr>

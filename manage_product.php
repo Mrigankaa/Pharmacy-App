@@ -75,6 +75,10 @@
                     <div id="displayData">
                         
                     </div>
+                    <div id="pagination">
+                        <a id="previous" href="" class="btn btn-light">Previous</a>
+                        <a id="next" href="" class="btn btn-light">Next</a>
+                    </div>
                     </div>
                     </div>
                 </div>            
@@ -94,7 +98,9 @@
         $.ajax({
             url:"valid_med.php",
             type:"post",
-            data:{display:display},
+            data:{
+                display:display
+            },
             success:function(data,status){
                 $("#displayData").html(data);
             }

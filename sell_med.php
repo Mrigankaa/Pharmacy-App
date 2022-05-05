@@ -15,6 +15,20 @@
                 $r1 = mysqli_query($conn,$s);
             }    
         }
+        
+        if(isset($_POST['customer_name']) && isset($_POST['discount'])){
+            $customer = $_POST['customer_name'];
+            $sql = "SELECT customer_id from customer where customer_name = '$customer'";
+            $r = mysqli_query($conn,$sql);
+            $row = mysqli_fetch_array($r);
+            $c_id = $row['customer_id'];
+            $date = date('Y-m-d');
+            $total = $_POST['total'];
+            $discount = $_POST['discount'];
+            $sub = $_POST['sub_total'];
+            $s = "INSERT INTO invoices(c_id,invoice_date,total_amount,discount,net_total) VALUES('$c_id','$date','$total','$discount','$sub')";
+            $result = mysqli_query($conn,$s);
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -125,6 +139,10 @@
                         <h5>Grand Total</h5>
                         <input type="text" class="form-control col-md-8 text-center" id="grand" readonly>
                     </div>
+                    <div class="d-inline-block">
+                        <h5>Discount</h5>
+                        <input type="text" class="form-control col-md-8 text-center" id="discount">
+                    </div>
                     <div class="d-inline-block mt-4">
                         <h6>Paid Amount:</h6>
                         <input type="text" class="form-control mt-2 col-md-8" id="paid">
@@ -135,7 +153,7 @@
                     </div>   
                     
                 </div>
-                <button class="btn btn-success float-right" id="save" onclick="makeBill('Bill')">Make Bill</button>
+                <button class="btn btn-success float-right" id="save">Save</button>
             </div>
         </div>
         </div>
@@ -144,7 +162,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="js/jquery.js"></script>
     <script src="js/sweetAlert.js"></script>
-    <!-- <script src="js/makePdf.js"></script> -->
+    <script src="js/makePdf.js"></script>
     <script>
 
         function getDate(){
@@ -157,7 +175,7 @@
             
             $.ajax({
                 url:"valid_sell_med.php",
-                type:"post",
+                type:"POST",
                 data:{customer:customer},
                 success:function(data,status){
                     $("#showCustomer").html(data);
@@ -177,7 +195,7 @@
             }else{
                 $.ajax({
                 url:"valid_sell_med.php",
-                type:"post",
+                type:"POST",
                 data:{name:name},
                 success:function(data,status){
                     $("#batch").html(data);
@@ -192,7 +210,7 @@
                         }else{
                             $.ajax({
                                 url:"valid_sell_med.php",
-                                type:"post",
+                                type:"POST",
                                 data:{name:name,batch:batch},
                                 success:function(data,status){
                                     if(arr.includes(name)){
@@ -231,10 +249,16 @@
             var selectItem = arr.indexOf(med_name);
             if(selectItem!==-1){
                 arr.splice(selectItem,1);
-            }  
-            
+            }      
         }
 
+        $(document).on("input","#discount",function(){
+            var total = $("#grand").val();
+            var discount = $("#discount").val();
+            var result = parseFloat(total*(discount/100));
+            var final = parseFloat(total)-result;
+            $("#grand").val(final);
+        });
 
         $("#save").click(function(){
             med_name = [];
@@ -254,12 +278,9 @@
                 total.push($(this).text());
             });
             
-            console.log(med_name);
-            console.log(total);
-            
             $.ajax({
                 url:"sell_med.php",
-                type:"post",
+                type:"POST",
                 data:{
                     med_name:med_name,
                     batch_number:batch_number,
@@ -270,14 +291,37 @@
                     alert("Data Saved Successfully");
                 }
             });            
+        });
+
+        $("#save").click(function(){
+            var customer_name = $("#customer_name").val();
+            var total = $("#grand").val();
+            var discount = $("#discount").val();
+            var sub_total = $("#paid").val();
+
+            $.ajax({
+                url:"sell_med.php",
+                type:"POST",
+                data:{
+                    customer_name:customer_name,
+                    total:total,
+                    discount:discount,
+                    sub_total:sub_total
+                },
+                success:function(data,status){
+
+                }
+            })
         })
 
         $("#paid").on("keyup", function(){
             var paid = $(this).val();
             var grandTotal = $("#grand").val();
             var change = grandTotal-paid;
-            $("#change").val(change);
+            $("#change").val(parseInt(change));
         });
+
+        
     </script>
 </body>
 </html>
