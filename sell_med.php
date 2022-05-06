@@ -45,7 +45,7 @@
         <div class="container">
         <div class="card my-2">
             <div class="card-body">
-                <h3><i class="bi bi-cart-plus-fill"></i> Manage Sell</h3>
+                <h3><i class="bi bi-cart-plus-fill"></i> Sell Medicine</h3>
                 <hr class="p-0.5 text-danger mb-4">               
             <div id="showExisting" class="mt-4 d-inline-block">
                 <select class="form-control" id="customer">
@@ -85,8 +85,6 @@
                             <input type="text" name="c_name" id="c_name" class="form-control" placeholder="Name" required>
                             <label>Contact Number</label>
                             <input type="text" name="c_phone" class="form-control" placeholder="Contact Number">
-                            <label for="">Previous Pay</label>
-                            <input type="text" name="pre_pay" class="form-control" placeholder="Previous Pay">
                             <label>Customer Address</label>
                             <textarea name="c_address" class="form-control" placeholder="Address"></textarea>
                             <label>Doctor's Name</label>
@@ -133,17 +131,22 @@
                 </tbody>
                </table>
                </div>
-               <hr class="p-0.5 text-info mt-5"> 
-               <div>
+               <hr class="p-0.5 mt-5"> 
+               <div class="float-right">
                     <div class="d-inline-block">
-                        <h5>Grand Total</h5>
+                        <h6>Total Amount:</h6>
                         <input type="text" class="form-control col-md-8 text-center" id="grand" readonly>
                     </div>
                     <div class="d-inline-block">
-                        <h5>Discount</h5>
+                        <h6>Discount(%):</h6>
                         <input type="text" class="form-control col-md-8 text-center" id="discount">
                     </div>
                     <div class="d-inline-block mt-4">
+                        <h6>Net Total:</h6>
+                        <input type="text" class="form-control mt-2 col-md-8" id="net" readonly>
+                    </div>
+                    <hr>
+                    <div class="d-inline-block">
                         <h6>Paid Amount:</h6>
                         <input type="text" class="form-control mt-2 col-md-8" id="paid">
                     </div>
@@ -153,7 +156,10 @@
                     </div>   
                     
                 </div>
-                <button class="btn btn-success float-right" id="save">Save</button>
+                <div class="mt-5">
+                    <button class="btn btn-success mt-5" id="">Generate Pdf</button>
+                    <button class="btn btn-success mt-5" id="save">Save</button>
+                </div>
             </div>
         </div>
         </div>
@@ -249,7 +255,8 @@
             var selectItem = arr.indexOf(med_name);
             if(selectItem!==-1){
                 arr.splice(selectItem,1);
-            }      
+            }
+
         }
 
         $(document).on("input","#discount",function(){
@@ -257,7 +264,7 @@
             var discount = $("#discount").val();
             var result = parseFloat(total*(discount/100));
             var final = parseFloat(total)-result;
-            $("#grand").val(final);
+            $("#net").val(final);
         });
 
         $("#save").click(function(){
@@ -316,8 +323,8 @@
 
         $("#paid").on("keyup", function(){
             var paid = $(this).val();
-            var grandTotal = $("#grand").val();
-            var change = grandTotal-paid;
+            var net_total = $("#net").val();
+            var change = net-paid;
             $("#change").val(parseInt(change));
         });
 

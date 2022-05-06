@@ -55,10 +55,6 @@
                         <input type="text" id="customer_name" value="'.$name.'" class="form-control" readonly>
                     </div>
                     <div class="d-inline-block">
-                        <label>Prevois Pay :</label>
-                        <input type="text" id="" value="'.$pay.'" class="form-control" readonly>
-                    </div>
-                    <div class="d-inline-block">
                         <label>Phone Number :</label>
                         <input type="text" id="" value="'.$number.'" class="form-control" readonly>
                     </div>

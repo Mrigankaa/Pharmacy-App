@@ -83,12 +83,6 @@
           </a>
           <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="supplier.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Suplier</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="manage_supplier.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Supplier</p>
