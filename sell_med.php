@@ -256,7 +256,10 @@
             if(selectItem!==-1){
                 arr.splice(selectItem,1);
             }
-
+            $("#myTable").on("click","tr",function(){
+                $(this).remove();
+                $("#myTable").off("click");
+            })  
         }
 
         $(document).on("input","#discount",function(){
