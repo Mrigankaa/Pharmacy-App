@@ -26,7 +26,7 @@
                                     <th>Date</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table">
                                 <?php 
                                     $sql = "SELECT * from sales";
                                     $r = mysqli_query($conn,$sql);
@@ -38,7 +38,7 @@
                                     <td><?php echo $row['med_name']; ?></td>
                                     <td><?php echo $row['batch_number']; ?></td>
                                     <td><?php echo $row['quantity']; ?></td>
-                                    <td><?php echo $row['total']; ?></td>
+                                    <td id="price"><?php echo $row['total']; ?></td>
                                     <td><?php echo $row['date']; ?></td>
                                 </tr>
                                 <?php
@@ -47,10 +47,26 @@
                                 ?>
                             </tbody>
                         </table>
+                        <div class="float-right">
+                            <h3 class="d-inline-block">Total: </h3>
+                            <h3 class="d-inline-block text-success" id="total"></h3>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            var grandTotal = 0;
+            $("#table #price").each(function(){
+                var total = parseFloat($(this).text());
+                grandTotal = grandTotal+total;
+                console.log(grandTotal);
+                $("#total").text("₹"+grandTotal)
+            })
+        })
+    </script>
 </body>
 </html>

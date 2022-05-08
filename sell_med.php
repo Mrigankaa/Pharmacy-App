@@ -36,6 +36,7 @@
 <head>
     <title>Pharmacy.com</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <?php
@@ -48,8 +49,8 @@
                 <h3><i class="bi bi-cart-plus-fill"></i> Sell Medicine</h3>
                 <hr class="p-0.5 text-danger mb-4">               
             <div id="showExisting" class="mt-4 d-inline-block">
-                <select class="form-control" id="customer">
-                    <option value="">Select Exising</option>
+                <select class="js-example-basic-single col-md-12" id="customer">
+                    <option value="">Select Customer</option>
                     <?php 
                         $sql = "SELECT customer_name from customer";
                         $r = mysqli_query($conn,$sql);       
@@ -99,7 +100,7 @@
             </div>
             <hr class="p-0.5 text-danger mb-4">
             <div class="d-inline-block mr-5">
-                <select class="form-control" id="name">
+                <select class="js-example-basic-single col-md-12" id="name">
                    <option id="option" value="empty">Select Medicine</option>
                <?php 
                    $sql = "SELECT med_name FROM medicine";
@@ -131,8 +132,8 @@
                 </tbody>
                </table>
                </div>
-               <hr class="p-0.5 mt-5"> 
-               <div class="float-right">
+               <hr class="p-0.5 text-success mt-5"> 
+               <div class="float-left">
                     <div class="d-inline-block">
                         <h6>Total Amount:</h6>
                         <input type="text" class="form-control col-md-8 text-center" id="grand" readonly>
@@ -145,7 +146,7 @@
                         <h6>Net Total:</h6>
                         <input type="text" class="form-control mt-2 col-md-8" id="net" readonly>
                     </div>
-                    <hr>
+                    <hr class="text-danger">
                     <div class="d-inline-block">
                         <h6>Paid Amount:</h6>
                         <input type="text" class="form-control mt-2 col-md-8" id="paid">
@@ -156,7 +157,7 @@
                     </div>   
                     
                 </div>
-                <div class="mt-5">
+                <div class="mt-5 float-right">
                     <button class="btn btn-success mt-5" id="">Generate Pdf</button>
                     <button class="btn btn-success mt-5" id="save">Save</button>
                 </div>
@@ -168,8 +169,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="js/jquery.js"></script>
     <script src="js/sweetAlert.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="js/makePdf.js"></script>
     <script>
+
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
 
         function getDate(){
             var date = new Date();
@@ -227,7 +233,7 @@
                                         });
                                     }else{
                                         arr.push(name);
-                                        $("#row").append(data);                              
+                                        $("#row").append(data);                          
                                     }
                                 }
                             });
@@ -237,9 +243,18 @@
             });
             }  
         });
-            
+
         $("#myTable").on("input","tr", function(){
+            var aval = parseInt($(this).find("#aval").text());
             var c = $(this).find("#qunatity").val();
+            if(aval<c){
+                swal({
+                    title: "Not Enough Medicine! Please Select Another Batch",
+                    icon: "warning",
+                    timer: 2000
+                }); 
+                $(this).find("#qunatity").val(aval);
+            }
             var b = $(this).find("#price").text();
             var total = b*c;
             $(this).find("#total").text(total);
@@ -327,7 +342,7 @@
         $("#paid").on("keyup", function(){
             var paid = $(this).val();
             var net_total = $("#net").val();
-            var change = net-paid;
+            var change = net_total-paid;
             $("#change").val(parseInt(change));
         });
 
