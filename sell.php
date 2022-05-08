@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Pharmacy.com</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <?php
@@ -57,6 +58,7 @@
         </div>
     </div>
     <script src="js/jquery.js"></script>
+    <script src="js/dataTable.js"></script>
     <script>
         $(document).ready(function(){
             var grandTotal = 0;
