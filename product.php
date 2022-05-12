@@ -35,11 +35,11 @@ include("connect.php");
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Purchase Price</label>
-                                <input type="text" name="p_price" class="form-control " placeholder="Purchase Price" required>
+                                <input type="text" id="purchase" name="p_price" class="form-control " placeholder="Purchase Price" required>
                             </div>
                             <div class="col-md-4">
                                 <label>Sell Price</label>
-                                <input type="text" name="s_price" class="form-control" placeholder="Sell Price" required>
+                                <input type="text" name="s_price" id="sell" class="form-control" placeholder="Sell Price" required>
                             </div>
                             <div class="col-md-4">
                                 <label>Quantity</label>
@@ -57,7 +57,7 @@ include("connect.php");
                             </div>
                             <div class="col-md-4">
                                 <label>GST</label>
-                                <select name="gst" class="form-control">
+                                <select name="gst" class="form-control" id="gst">
                                     <option value="">Select GST</option>
                                     <?php
                                     $sql = "SELECT gst_amount from gst";
@@ -114,6 +114,15 @@ include("connect.php");
     <?php require "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script>
+        $("#gst").on("change",function(){
+            var a = parseInt($("#purchase").val());
+            var gst = parseInt($("#gst").val());
+            var result = a+a*(gst/100);
+            $("#sell").val(result);
+        })
+    </script>
 </body>
 
 </html>

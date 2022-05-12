@@ -2,20 +2,6 @@
 include "connect.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     extract($_POST);
-    if (isset($_POST['med_name']) && isset($_POST['batch_number']) && isset($_POST['quantity']) && isset($_POST['total'])) {
-        $med_name = $_POST['med_name'];
-        $batch_number = $_POST['batch_number'];
-        $quantity = $_POST['quantity'];
-        $total = $_POST['total'];
-        $date = date('Y-m-d');
-        for ($count = 0; $count < count($med_name); $count++) {
-            $q = "INSERT INTO sales(med_name,batch_number,quantity,total,date) values('$med_name[$count]','$batch_number[$count]','$quantity[$count]','$total[$count]','$date')";
-            $r = mysqli_query($conn, $q);
-            $s = "UPDATE medicine SET quantity = quantity-'$quantity[$count]' Where med_name = '$med_name[$count]' AND batch_number = '$batch_number[$count]'";
-            $r1 = mysqli_query($conn, $s);
-        }
-    }
-
     if (isset($_POST['customer_name']) && isset($_POST['discount'])) {
         $customer = $_POST['customer_name'];
         $sql = "SELECT customer_id from customer where customer_name = '$customer'";
@@ -28,6 +14,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sub = $_POST['sub_total'];
         $s = "INSERT INTO invoices(c_id,invoice_date,total_amount,discount,net_total) VALUES('$c_id','$date','$total','$discount','$sub')";
         $result = mysqli_query($conn, $s);
+        $last_id = mysqli_insert_id($conn);
+    }
+
+    if (isset($_POST['med_name']) && isset($_POST['batch_number']) && isset($_POST['quantity']) && isset($_POST['total'])) {
+        $sql = "SELECT MAX(invoice_id) FROM invoices";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_row($result);
+        $invoice_id = $row[0];
+        $med_name = $_POST['med_name'];
+        $batch_number = $_POST['batch_number'];
+        $quantity = $_POST['quantity'];
+        $total = $_POST['total'];
+        $date = date('Y-m-d');
+        for ($count = 0; $count < count($med_name); $count++) {
+            $q = "INSERT INTO sales(invoice_id,med_name,batch_number,quantity,total,date) VALUES('$invoice_id','$med_name[$count]','$batch_number[$count]','$quantity[$count]','$total[$count]','$date')";
+            $r = mysqli_query($conn, $q);
+            $s = "UPDATE medicine SET quantity = quantity-'$quantity[$count]' Where med_name = '$med_name[$count]' AND batch_number = '$batch_number[$count]'";
+            $r1 = mysqli_query($conn, $s);
+        }
     }
 }
 ?>
@@ -148,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h6>Net Total:</h6>
                             <input type="text" class="form-control mt-2 col-md-8" id="net" readonly>
                         </div>
-                        <hr class="text-danger">
+                        <hr class="text-danger" class="mt-3">
                         <div class="d-inline-block">
                             <h6>Paid Amount:</h6>
                             <input type="text" class="form-control mt-2 col-md-8" id="paid">
@@ -157,11 +162,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h6>Change:</h6>
                             <input type="text" class="form-control col-md-4 text-center" id="change" readonly>
                         </div>
-
                     </div>
                     <div class="mt-5 float-right">
                         <button class="btn btn-success mt-5" id="">Generate Pdf</button>
-                        <button herf="sell_med.php" class="btn btn-success mt-5" id="save">Save</button>
+                        <button class="btn btn-success mt-5" id="save">Save</button>
                     </div>
                 </div>
             </div>
@@ -296,39 +300,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
 
         $("#save").click(function() {
-            med_name = [];
-            batch_number = [];
-            quantity = [];
-            total = [];
-            $("#row #item").each(function() {
-                med_name.push($(this).text());
-            });
-            $("#row #batchNumber").each(function() {
-                batch_number.push($(this).text());
-            });
-            $("#row #qunatity").each(function() {
-                quantity.push($(this).val());
-            });
-            $("#row #total").each(function() {
-                total.push($(this).text());
-            });
-
-            $.ajax({
-                url: "sell_med.php",
-                type: "POST",
-                data: {
-                    med_name: med_name,
-                    batch_number: batch_number,
-                    quantity: quantity,
-                    total: total
-                },
-                success: function(data, status) {
-                    alert("Data Saved Successfully");
-                }
-            });
-        });
-
-        $("#save").click(function() {
             var customer_name = $("#customer_name").val();
             var total = $("#grand").val();
             var discount = $("#discount").val();
@@ -344,10 +315,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     sub_total: sub_total
                 },
                 success: function(data, status) {
+                    med_name = [];
+                    batch_number = [];
+                    quantity = [];
+                    total = [];
 
+                    $("#row #item").each(function() {
+                        med_name.push($(this).text());
+                    });
+                    $("#row #batchNumber").each(function() {
+                        batch_number.push($(this).text());
+                    });
+                    $("#row #qunatity").each(function() {
+                        quantity.push($(this).val());
+                    });
+                    $("#row #total").each(function() {
+                        total.push($(this).text());
+                    });
+                    $.ajax({
+                        url: "sell_med.php",
+                        type: "POST",
+                        data: {
+                            med_name: med_name,
+                            batch_number: batch_number,
+                            quantity: quantity,
+                            total: total
+                        },
+                        success: function(data, status) {
+                            alert("Data saved Successfully");
+                            location.reload();
+                        }
+                    });
                 }
             })
-        })
+        });
 
         $("#paid").on("keyup", function() {
             var paid = $(this).val();
