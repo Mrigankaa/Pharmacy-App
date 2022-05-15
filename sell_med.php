@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </select>
                     </div>
                     <div class="m-2 d-inline-block">
-                        <button type="button" class="btn btn-sm btn-primary" style="height: 37px;" data-bs-toggle="modal" data-bs-target="#addCustomer">
+                        <button type="button" class="btn btn-sm btn-outline-primary" style="height: 37px;" data-bs-toggle="modal" data-bs-target="#addCustomer">
                             New Customer
                         </button>
                     </div>
@@ -119,8 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </select>
                     </div>
                     <div class="d-inline-block" id="batch"></div>
-                    <div class="mt-2">
-                        <table class="table table-bordered text-center" id="myTable">
+                    <div class="mt-4">
+                        <table class="table table-bordered table-secondary text-center" id="myTable">
                             <thead>
                                 <tr>
                                     <th>Medicine Name</th>
@@ -139,8 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </tbody>
                         </table>
                     </div>
-                    <hr class="p-0.5 text-success mt-5">
-                    <div class="float-left">
+                    <hr class="p-0.2 text-primary mt-5">
+                    <div class="float-left mt-3">
                         <div class="d-inline-block">
                             <h6>Total Amount:</h6>
                             <input type="text" class="form-control col-md-8 text-center" id="grand" readonly>
@@ -148,12 +148,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="d-inline-block">
                             <h6>Discount(%):</h6>
                             <input type="text" class="form-control col-md-8 text-center" id="discount">
-                        </div>
-                        <div class="d-inline-block mt-4">
+                        </div><br>
+                        <div class="d-inline-block">
                             <h6>Net Total:</h6>
                             <input type="text" class="form-control mt-2 col-md-8" id="net" readonly>
                         </div>
-                        <hr class="text-danger" class="mt-3">
                         <div class="d-inline-block">
                             <h6>Paid Amount:</h6>
                             <input type="text" class="form-control mt-2 col-md-8" id="paid">
@@ -164,13 +163,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="mt-5 float-right">
-                        <button class="btn btn-success mt-5" id="">Generate Pdf</button>
-                        <button class="btn btn-success mt-5" id="save">Save</button>
+                        <button class="btn btn-outline-success mt-5" id="">Generate Pdf</button>
+                        <button class="btn btn-outline-warning mt-5" id="save">Save</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php require "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.js"></script>

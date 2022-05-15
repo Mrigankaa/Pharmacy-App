@@ -49,7 +49,7 @@ if (isset($_POST['updateId'])) {
         <div class="container">
             <div class="card my-2">
                 <div class="card-body">
-                    <h3>Manage Supplier</h3>
+                    <h3><i class="bi bi-person-check-fill"></i> Manage Supplier</h3>
                     <hr class="p-0.5 text-danger mb-4">
                     <div class="col-md-3">
                         <label>Search:</label>
@@ -117,6 +117,7 @@ if (isset($_POST['updateId'])) {
             </div>
         </div>
     </div>
+    <?php require "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.js"></script>

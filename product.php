@@ -15,7 +15,7 @@ include("connect.php");
         <div class="container">
             <div class="card my-2">
                 <div class="card-body">
-                    <h3>Add Medicines</h3>
+                    <h3><i class="bi bi-bag-plus-fill"></i> Add Medicines</h3>
                     <hr class="p-0.5 text-danger mb-4">
                     <form action="manage_product.php" method="post">
                         <div class="row">
@@ -39,7 +39,7 @@ include("connect.php");
                             </div>
                             <div class="col-md-4">
                                 <label>Sell Price</label>
-                                <input type="text" name="s_price" id="sell" class="form-control" placeholder="Sell Price" required>
+                                <input type="text" name="s_price" id="sell" class="form-control" placeholder="Sell Price" required readonly>
                             </div>
                             <div class="col-md-4">
                                 <label>Quantity</label>
@@ -116,10 +116,10 @@ include("connect.php");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.js"></script>
     <script>
-        $("#gst").on("change",function(){
+        $("#gst").on("change", function() {
             var a = parseInt($("#purchase").val());
             var gst = parseInt($("#gst").val());
-            var result = a+a*(gst/100);
+            var result = a + a * (gst / 100);
             $("#sell").val(result);
         })
     </script>

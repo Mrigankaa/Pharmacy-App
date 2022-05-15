@@ -35,8 +35,8 @@ if (isset($_SESSION['id'])) {
       </form>
     </div>
   </div>
+  <?php require "footer.php"; ?>
 </body>
-
 </html>
 
 

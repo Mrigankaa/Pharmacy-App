@@ -44,7 +44,6 @@
         $r = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($r);
         $name = $row['customer_name'];
-        $pay = $row['previous_pay'];
         $number = $row['phone_number'];
         $address = $row['address'];
         $doctor = $row['doctor_name'];

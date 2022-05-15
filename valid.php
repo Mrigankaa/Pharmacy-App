@@ -2,7 +2,7 @@
 include("connect.php");
 if (isset($_POST['sendGst'])) {
     $table = '
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center">
         <thead>
             <tr>
             <th scope="col">Id</th>
@@ -38,7 +38,7 @@ if (isset($_POST['sendGst'])) {
 
 if (isset($_POST['sendCategory'])) {
     $table = '
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center">
         <thead>
             <tr>
             <th scope="col">Id</th>
@@ -72,7 +72,7 @@ if (isset($_POST['sendCategory'])) {
 
 if (isset($_POST['sendRack'])) {
     $table = '
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center">
         <thead>
             <tr>
             <th scope="col">Id</th>
@@ -107,7 +107,7 @@ if (isset($_POST['sendRack'])) {
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $table = '
-            <table class="table table-bordered ">
+            <table class="table table-bordered text-center">
             <thead>
                 <tr>
                 <th scope="col">Med Name</th>

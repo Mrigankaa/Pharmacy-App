@@ -29,15 +29,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container">
             <div class="card my-2">
                 <div class="card-body">
-                    <h3>Manage Customer</h3>
+                    <h3><i class="bi bi-people-fill"></i> Manage Customer</h3>
                     <hr class="p-0.5 text-danger mb-4">
                     <div class="col-md-3">
                         <label>Search:</label>
                         <input type="text" id="search" class="form-control" placeholder="Search Customer">
-                        <button class="btn btn-primary btn-sm my-2">Search</button>
                     </div>
                     <hr class="p-0.5 text-danger mb-4">
-                    <div id="displayData"></div>
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Doctor Name</th>
+                                    <th>Doctor's Address</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $sql = "SELECT * from customer";
+                                $r = mysqli_query($conn, $sql);
+                                $index = 1;
+                                while ($row = mysqli_fetch_array($r)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $index; ?></td>
+                                        <td><?php echo $row['customer_name']; ?></td>
+                                        <td><?php echo $row['phone_number']; ?></td>
+                                        <td><?php echo $row['address']; ?></td>
+                                        <td><?php echo $row['doctor_name']; ?></td>
+                                        <td><?php echo $row['doctor_address']; ?></td>
+                                        <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                                    </tr>
+                                <?php
+                                    $index++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal fade" id="updateSupplier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,6 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+    <script src="js/jquery.js"></script>
+    <script></script>
 </body>
 
 </html>

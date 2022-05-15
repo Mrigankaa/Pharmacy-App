@@ -14,7 +14,7 @@ if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body">
+<body>
   <?php require "sidebar.php"; ?>
   <div class="content-wrapper">
     <div class="container">
@@ -32,7 +32,7 @@ if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
                 <div class="icon">
                   <i class="fas fa-chart-line"></i>
                 </div>
-                <a href="#" class="small-box-footer">See Details <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="sell.php" class="small-box-footer">See Details <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <div class="col-lg-3 col-6">

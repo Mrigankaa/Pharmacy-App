@@ -16,7 +16,7 @@
         <div class="container">
             <div class="card my-2">
                 <div class="card-body">
-                    <h3><i class=""></i>Sell Report</h3>
+                    <h3><i class="bi bi-file-earmark-bar-graph-fill"></i>Sell Report</h3>
                     <hr class="p-0.5 text-danger mb-4">
                     <div class="container table-responsive">
                         <div class="modal fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,17 +76,19 @@
                             <h3 class="d-inline-block text-success" id="total"></h3>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary">Print </button>
+                            <button class="btn btn-primary" onclick="makePdf()">Print </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php require "footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.js"></script>
-    <script src="js/dataTable.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
         $(document).ready(function() {
             var grandTotal = 0;
@@ -109,6 +111,10 @@
                     $("#show").html(data);
                 }
             })
+        }
+
+        function makePdf(){
+            
         }
     </script>
 </body>
