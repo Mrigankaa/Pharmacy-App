@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+require("checkLogin.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $c_name = $_POST['c_name'];
     $c_number = $_POST['c_phone'];

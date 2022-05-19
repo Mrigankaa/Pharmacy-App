@@ -1,10 +1,5 @@
 <?php
-session_start();
-include "connect.php";
-if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
-  header('location:index.php');
-  exit();
-}
+require("checkLogin.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +9,7 @@ if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <?php require "sidebar.php"; ?>
   <div class="content-wrapper">
@@ -60,18 +56,6 @@ if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
               </div>
             </div>
             <div class="col-lg-3 col-6">
-              <div class="small-box bg-danger">
-                <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
-                  <p>Bounce Rate</p>
-                </div>
-                <div class="icon">
-                  <i class=""></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <div class="col-lg-3 col-6">
               <div class="small-box bg-primary">
                 <div class="inner">
                   <h3>Report<sup style="font-size: 20px"></sup></h3>
@@ -90,6 +74,6 @@ if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
   </div>
   </div>
   <?php require "footer.php"; ?>
-  </body>
+</body>
 
 </html>

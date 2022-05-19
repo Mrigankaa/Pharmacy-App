@@ -9,7 +9,7 @@
 
 <body>
     <?php
-    require "connect.php";
+    require("checkLogin.php");
     require "sidebar.php";
     ?>
     <div class="content-wrapper">
@@ -17,6 +17,7 @@
             <div class="card my-2">
                 <div class="card-body">
                     <h3><i class="bi bi-file-earmark-bar-graph-fill"></i>Sell Report</h3>
+                    <p>Today's Sell Report</p>
                     <hr class="p-0.5 text-danger mb-4">
                     <div class="container table-responsive">
                         <div class="modal fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -31,7 +32,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered text-center">
+                        <table class="table table-bordered text-center" id="table">
                             <thead>
                                 <tr>
                                     <th>Invoice Number</th>
@@ -45,7 +46,8 @@
                             </thead>
                             <tbody id="table">
                                 <?php
-                                $sql = "SELECT * from invoices";
+                                $date = date("Y-m-d");
+                                $sql = "SELECT * from invoices where invoice_date = '$date'";
                                 $r = mysqli_query($conn, $sql);
                                 $index = 1;
                                 while ($row = mysqli_fetch_array($r)) {
@@ -62,7 +64,7 @@
                                         <td><?php echo $row['total_amount']; ?></td>
                                         <td><?php echo $row['discount']; ?></td>
                                         <td id="price"><?php echo $row['net_total']; ?></td>
-                                        <td><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#popUp" onclick="view(<?php echo $id; ?>)">view</button></td>
+                                        <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#popUp" onclick="view(<?php echo $id; ?>)">view</button></td>
                                     </tr>
                                 <?php
                                     $index++;
@@ -76,7 +78,7 @@
                             <h3 class="d-inline-block text-success" id="total"></h3>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary" onclick="makePdf()">Print </button>
+                            <button class="btn btn-sm btn-primary" onclick="generatePDF()">Print Report</button>
                         </div>
                     </div>
                 </div>
@@ -84,18 +86,17 @@
         </div>
     </div>
     <?php require "footer.php"; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="js/makePdf.js"></script>
     <script>
         $(document).ready(function() {
             var grandTotal = 0;
             $("#table #price").each(function() {
                 var total = parseFloat($(this).text());
                 grandTotal = grandTotal + total;
-                console.log(grandTotal);
                 $("#total").text("₹" + grandTotal)
             })
         });
@@ -113,8 +114,10 @@
             })
         }
 
-        function makePdf(){
-            
+        function generatePDF() {
+
+            var table = document.getElementById("table");
+            html2pdf().from(table).save();
         }
     </script>
 </body>

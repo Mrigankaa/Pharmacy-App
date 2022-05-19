@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+require("checkLogin.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     extract($_POST);
     if (isset($_POST['cat_type'])) {

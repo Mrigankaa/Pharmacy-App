@@ -93,4 +93,3 @@
         $table.='</table>';
         echo $table;
     }
-?>

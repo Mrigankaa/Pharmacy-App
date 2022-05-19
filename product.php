@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+require("checkLogin.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,24 +38,6 @@ include("connect.php");
                                 <input type="text" id="purchase" name="p_price" class="form-control " placeholder="Purchase Price" required>
                             </div>
                             <div class="col-md-4">
-                                <label>Sell Price</label>
-                                <input type="text" name="s_price" id="sell" class="form-control" placeholder="Sell Price" required readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Quantity</label>
-                                <input type="text" name="quantity" class="form-control" placeholder="Packing eg:10pc">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Menufacture Date</label>
-                                <input type="date" name="m_date" class="form-control" placeholder="Packing eg:10pc" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Expairy Date</label>
-                                <input type="date" name="e_date" class="form-control" placeholder="Packing eg:10pc" required>
-                            </div>
-                            <div class="col-md-4">
                                 <label>GST</label>
                                 <select name="gst" class="form-control" id="gst">
                                     <option value="">Select GST</option>
@@ -67,6 +49,25 @@ include("connect.php");
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="col-md-4">
+                                <label>Sell Price</label>
+                                <input type="text" name="s_price" id="sell" class="form-control" placeholder="Sell Price" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Quantity</label>
+                                <input type="text" name="quantity" class="form-control" placeholder="Packing eg:10pc">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Menufacture Date</label>
+                                <input type="date" name="m_date" class="form-control" placeholder="Packing eg:10pc" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Expairy Date</label>
+                                <input type="date" name="e_date" class="form-control" placeholder="Packing eg:10pc" required>
+                            </div>
+
                             <div class="col-md-4">
                                 <label>Category</label>
                                 <select name="category" class="form-control">

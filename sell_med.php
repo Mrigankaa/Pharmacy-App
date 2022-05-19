@@ -1,5 +1,5 @@
 <?php
-include "connect.php";
+require("checkLogin.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     extract($_POST);
     if (isset($_POST['customer_name']) && isset($_POST['discount'])) {
@@ -55,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card-body">
                     <h3><i class="bi bi-cart-plus-fill"></i> Sell Medicine</h3>
                     <hr class="p-0.5 text-danger mb-4">
-                    <div id="showExisting" class="mt-4 d-inline-block">
-                        <select class="js-example-basic-single col-md-12" id="customer">
+                    <div id="showExisting" class="mt-4 ">
+                        <select class="js-example-basic-single col-md-3" id="customer">
                             <option value="">Select Customer</option>
                             <?php
                             $sql = "SELECT customer_name from customer";
@@ -66,12 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="m-2 d-inline-block">
-                        <button type="button" class="btn btn-sm btn-outline-primary" style="height: 37px;" data-bs-toggle="modal" data-bs-target="#addCustomer">
+                    <div class="mt-2" id="showCustomer"></div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-outline-light" style="height: 37px;" data-bs-toggle="modal" data-bs-target="#addCustomer">
                             New Customer
                         </button>
-                    </div>
-                    <div class="mt-2" id="showCustomer">
                     </div>
                     <div class="col col-md-12 table-responsive">
                         <div id="print_content" class="table-responsive">
@@ -120,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="d-inline-block" id="batch"></div>
                     <div class="mt-4">
-                        <table class="table table-bordered table-secondary text-center" id="myTable">
+                        <table class="table table-bordered text-center" id="myTable">
                             <thead>
                                 <tr>
                                     <th>Medicine Name</th>
@@ -163,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="mt-5 float-right">
-                        <button class="btn btn-outline-success mt-5" id="">Generate Pdf</button>
+                        <button class="btn btn-outline-success mt-5" onclick="makePdf()">Generate Pdf</button>
                         <button class="btn btn-outline-warning mt-5" id="save">Save</button>
                     </div>
                 </div>
@@ -175,8 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/sweetAlert.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="js/makePdf.js"></script>
+    <script src="js/select.js"></script>
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
@@ -356,6 +354,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var change = net_total - paid;
             $("#change").val(parseInt(change));
         });
+
+        function makePdf() {
+
+            const doc = new jsPDF();
+            console.log(doc);
+            doc.text("<h1>hello</h1>");
+            doc.save("a4.pdf");
+        }
     </script>
 </body>
 
